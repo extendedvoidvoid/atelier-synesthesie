@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Atelier Synesthésie — The Video Printing Press</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --canvas: #FBFBFA;
+      --surface: #FFFFFF;
+      --ink: #1A1A19;
+      --muted: #787774;
+      --hairline: #EAEAEA;
+      --pale-red-bg: #FDEBEC; --pale-red-fg: #9F2F2D;
+      --pale-blue-bg: #E1F3FE; --pale-blue-fg: #1F6C9F;
+      --pale-green-bg: #EDF3EC; --pale-green-fg: #346538;
+      --pale-yellow-bg: #FBF3DB; --pale-yellow-fg: #956400;
+      --display: 'Instrument Serif', 'Newsreader', Georgia, serif;
+      --sans: 'Inter Tight', 'Switzer', 'SF Pro Display', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', 'Geist Mono', ui-monospace, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; scroll-behavior: smooth; }
+    body {
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
+
+    /* ============ NAV (floating pill) ============ */
+    .nav {
+      position: sticky; top: 16px; z-index: 50;
+      margin: 16px auto 0;
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 920px;
+      padding: 10px 14px 10px 20px;
+      background: rgba(251,251,250,0.78);
+      backdrop-filter: saturate(140%) blur(16px);
+      -webkit-backdrop-filter: saturate(140%) blur(16px);
+      border: 1px solid var(--hairline);
+      border-radius: 999px;
+    }
+    .nav .brand { font-family: var(--display); font-size: 22px; letter-spacing: -0.01em; }
+    .nav .brand em { font-style: italic; color: var(--muted); }
+    .nav ul { list-style: none; display: flex; gap: 22px; margin: 0; padding: 0; }
+    .nav ul a { color: var(--ink); text-decoration: none; font-size: 13.5px; font-weight: 500; }
+    .nav ul a:hover { color: var(--muted); }
+    .nav .cta {
+      font: 500 13px/1 var(--sans);
+      padding: 9px 14px; border-radius: 999px;
+      background: var(--ink); color: var(--canvas);
+      border: 1px solid var(--ink);
+      transition: transform 200ms cubic-bezier(0.16,1,0.3,1);
+      cursor: pointer;
+    }
+    .nav .cta:active { transform: scale(0.98); }
+
+    /* ============ HERO (asymmetric, eyebrow + serif display) ============ */
+    .hero { padding: 96px 0 64px; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--muted);
+      padding: 5px 11px; border: 1px solid var(--hairline);
+      border-radius: 999px; background: var(--surface);
+    }
+    .eyebrow .dot { width: 6px; height: 6px; border-radius: 999px; background: var(--pale-green-fg); }
+    .hero h1 {
+      font-family: var(--display);
+      font-size: clamp(44px, 6.5vw, 84px);
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      margin: 22px 0 0;
+      max-width: 20ch;
+      font-weight: 400;
+    }
+    .hero h1 em { font-style: italic; color: var(--muted); }
+    .hero .lede {
+      font-size: 18.5px; color: var(--muted);
+      max-width: 52ch; margin: 24px 0 36px;
+      line-height: 1.55;
+    }
+    .hero .actions { display: flex; gap: 12px; align-items: center; margin-bottom: 48px; }
+    .btn {
+      font: 500 14px/1 var(--sans);
+      padding: 13px 22px; border-radius: 8px;
+      cursor: pointer; transition: transform 200ms cubic-bezier(0.16,1,0.3,1), box-shadow 200ms ease;
+    }
+    .btn-primary { background: var(--ink); color: var(--canvas); border: 1px solid var(--ink); }
+    .btn-primary:hover { background: #2A2A28; }
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--hairline); }
+    .btn-link { background: transparent; border: none; color: var(--ink); padding: 13px 0; font: 500 14px/1 var(--sans); cursor: pointer; text-decoration: none; }
+    .btn-link::after { content: ' →'; color: var(--muted); }
+
+    .keystroke {
+      font-family: var(--mono); font-size: 11.5px;
+      padding: 3px 7px; border: 1px solid var(--hairline);
+      border-radius: 4px; background: var(--surface);
+      color: var(--muted);
+    }
+
+    /* ============ PHONE SHOWCASE ============ */
+    .showcase-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      border-top: 1px solid var(--hairline);
+      padding-top: 64px;
+    }
+    .phone-mockup {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 32px;
+      aspect-ratio: 9/16;
+      padding: 12px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.01);
+      transition: transform 300ms cubic-bezier(0.16,1,0.3,1), box-shadow 300ms ease;
+    }
+    .phone-mockup:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.04);
+    }
+    .phone-screen {
+      width: 100%;
+      height: 100%;
+      border-radius: 22px;
+      background: #111111;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 18px;
+    }
+    .phone-video-art {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 1;
+      opacity: 0.75;
+      background-size: cover;
+      background-position: center;
+      mix-blend-mode: hard-light;
+    }
+    .phone-overlay {
+      position: relative;
+      z-index: 10;
+      align-self: flex-start;
+      background: rgba(26, 26, 25, 0.7);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #FFFFFF;
+      font-family: var(--mono);
+      letter-spacing: 0.08em;
+      font-size: 9.5px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      text-transform: uppercase;
+    }
+    .phone-watermark {
+      position: absolute;
+      top: 18px; right: 18px;
+      z-index: 10;
+      background: #FFFFFF;
+      color: #000000;
+      font-family: var(--sans);
+      font-weight: 900;
+      font-size: 10px;
+      letter-spacing: -0.01em;
+      padding: 3px 6px;
+      border: 1.5px solid #000000;
+    }
+    .phone-caption {
+      position: relative;
+      z-index: 10;
+      color: #FFFFFF;
+      font-family: var(--display);
+      font-size: clamp(18px, 2.5vw, 22px);
+      font-style: italic;
+      line-height: 1.15;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+      margin-top: auto;
+    }
+    .phone-caption b { font-style: normal; font-family: var(--sans); font-weight: 600; display: block; font-size: 11px; text-transform: uppercase; color: #EAEAEA; margin-bottom: 6px; letter-spacing: 0.05em;}
+
+    /* Backgrounds simulating dynamic video contents */
+    .bg-forge { background: linear-gradient(135deg, #111 20%, #7d3312 70%, #f97316 100%); }
+    .bg-editorial { background: linear-gradient(135deg, #222 10%, #444 60%, #a8a29e 100%); }
+    .bg-cobalt { background: linear-gradient(135deg, #09090b 20%, #1d4ed8 75%, #3b82f6 100%); }
+
+    /* ============ BENTO (uneven grid, hairline only) ============ */
+    .bento {
+      padding: 72px 0;
+      border-top: 1px solid var(--hairline);
+    }
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-auto-rows: minmax(180px, auto);
+      gap: 0;
+      border: 1px solid var(--hairline);
+      background: var(--hairline);
+    }
+    .bento-grid > .cell {
+      background: var(--surface);
+      padding: 28px 30px;
+    }
+    .cell--hero { grid-column: span 4; grid-row: span 2; padding: 36px 40px; }
+    .cell--tall { grid-column: span 2; grid-row: span 2; }
+    .cell--wide { grid-column: span 4; }
+    .cell--small { grid-column: span 2; }
+    .cell h3 { font-family: var(--display); font-size: 26px; font-weight: 400; letter-spacing: -0.02em; margin: 0 0 8px; line-height: 1.15; }
+    .cell h4 { font-size: 14px; font-weight: 600; margin: 0 0 6px; letter-spacing: -0.005em; }
+    .cell p { font-size: 14px; color: var(--muted); margin: 0; line-height: 1.6; max-width: 38ch; }
+    .cell .num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 22px; }
+
+    .chip {
+      display: inline-block; font-family: var(--mono); font-size: 10.5px;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 999px; margin-right: 6px;
+    }
+    .chip--green { background: var(--pale-green-bg); color: var(--pale-green-fg); }
+    .chip--blue { background: var(--pale-blue-bg); color: var(--pale-blue-fg); }
+    .chip--red { background: var(--pale-red-bg); color: var(--pale-red-fg); }
+    .chip--yellow { background: var(--pale-yellow-bg); color: var(--pale-yellow-fg); }
+
+    .doclines {
+      font-family: var(--mono); font-size: 11.5px; color: var(--muted); line-height: 1.85;
+      border-top: 1px dashed var(--hairline); padding-top: 14px; margin-top: 20px;
+    }
+    .doclines b { color: var(--ink); font-weight: 500; }
+
+    /* ============ CONTRAST BLOCK (no card, hairline only) ============ */
+    .contrast {
+      padding: 88px 0;
+      border-top: 1px solid var(--hairline);
+    }
+    .contrast .columns {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+    }
+    .contrast h2 {
+      font-family: var(--display); font-size: clamp(34px, 4.4vw, 56px);
+      line-height: 1.05; letter-spacing: -0.025em; margin: 0;
+      max-width: 14ch; font-weight: 400;
+    }
+    .contrast .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 1px solid var(--hairline); margin-top: 24px; }
+    .contrast .pair > div { padding: 22px 0; border-bottom: 1px solid var(--hairline); }
+    .contrast .pair > div + div { border-left: 1px solid var(--hairline); padding-left: 22px; }
+    .contrast .pair > div:nth-child(odd) { padding-right: 22px; }
+    .contrast .pair .label { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); margin-bottom: 8px; }
+    .contrast .pair p { margin: 0; font-size: 14.5px; line-height: 1.55; }
+    .contrast .pair .strike { color: var(--muted); text-decoration: line-through; text-decoration-thickness: 1px; }
+
+    /* ============ PRICING band (no card overuse) ============ */
+    .pricing { padding: 88px 0; border-top: 1px solid var(--hairline); }
+    .pricing-head { display: flex; justify-content: space-between; align-items: end; gap: 32px; margin-bottom: 36px; }
+    .pricing-head h2 { font-family: var(--display); font-size: clamp(32px, 4vw, 48px); margin: 0; font-weight: 400; letter-spacing: -0.02em; line-height: 1.05; max-width: 18ch; }
+    .pricing-head p { color: var(--muted); margin: 0; max-width: 38ch; font-size: 14.5px; }
+    .tiers { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--hairline); }
+    .tier { padding: 32px 28px; }
+    .tier + .tier { border-left: 1px solid var(--hairline); }
+    .tier h3 { font-family: var(--display); font-size: 24px; font-weight: 400; margin: 0 0 4px; letter-spacing: -0.01em; }
+    .tier .sub { color: var(--muted); font-size: 13px; margin: 0 0 18px; }
+    .tier .price { font-family: var(--display); font-size: 44px; letter-spacing: -0.025em; line-height: 1; margin-bottom: 18px; font-weight: 400; }
+    .tier .price small { font-family: var(--sans); font-size: 13px; color: var(--muted); margin-left: 6px; }
+    .tier ul { list-style: none; padding: 0; margin: 0 0 24px; }
+    .tier ul li { font-size: 13.5px; padding: 8px 0; border-top: 1px solid var(--hairline); color: var(--ink); }
+    .tier ul li:first-child { border-top: none; }
+    .tier ul li::before { content: '— '; color: var(--muted); }
+    .tier .btn { width: 100%; }
+    .tier--highlight { background: var(--canvas); position: relative; }
+    .tier--highlight::after {
+      content: 'primary target';
+      position: absolute; top: 16px; right: 16px;
+      font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--pale-green-fg); background: var(--pale-green-bg);
+      padding: 3px 8px; border-radius: 999px;
+    }
+
+    /* ============ FOOTER ============ */
+    footer {
+      border-top: 1px solid var(--hairline);
+      padding: 32px 0;
+      font-family: var(--mono); font-size: 11.5px; color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+    footer .row { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--ink); }
+
+    /* ============ RESPONSIVE ============ */
+    @media (max-width: 880px) {
+      .nav ul { display: none; }
+      .showcase-row { grid-template-columns: 1fr; }
+      .bento-grid { grid-template-columns: 1fr; }
+      .cell--hero, .cell--tall, .cell--wide, .cell--small { grid-column: span 1; grid-row: auto; }
+      .contrast .columns, .pricing-head, .tiers { grid-template-columns: 1fr; display: block; }
+      .tier + .tier { border-left: none; border-top: 1px solid var(--hairline); }
+      .pricing-head p { margin-top: 12px; }
+    }
+
+    /* ============ MOTION (entry, subtle) ============ */
+    .reveal { opacity: 0; transform: translateY(12px); transition: opacity 600ms cubic-bezier(0.16,1,0.3,1), transform 600ms cubic-bezier(0.16,1,0.3,1); }
+    .reveal.is-in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="nav" data-od-id="topnav">
+    <span class="brand">Atelier Synesthésie<em> · césar+</em></span>
+    <ul>
+      <li><a href="#bento">The Pipeline</a></li>
+      <li><a href="#contrast">The Aesthetic</a></li>
+      <li><a href="#roadmap">Initiatives</a></li>
+    </ul>
+    <a href="#roadmap" class="cta" style="text-decoration:none;">Join the waitlist</a>
+  </header>
+
+  <main>
+    <section class="wrap hero reveal" data-od-id="hero">
+      <span class="eyebrow"><span class="dot"></span>Station F Pre-Incubation · Build 2.0.0</span>
+      <h1>An industrial printing press for <em>sovereign vertical media</em>.</h1>
+      <p class="lede">Atelier Synesthésie develops high-fidelity, autonomous media pipelines. Rather than simple templates, our technology operates as an elite digital printing press—translating rich architectural archives, haute couture, and the noble gestures of <i>Les Ouvriers de France</i> into infinite variations of beat-synced vertical cinema. Under lock, key, and complete sovereignty.</p>
+      <div class="actions">
+        <a href="#roadmap" class="btn btn-primary" style="text-decoration:none;">View our initiatives</a>
+        <a href="https://github.com" class="btn-link" target="_blank">Explore the repository</a>
+        <span class="keystroke">Station F 2026</span>
+      </div>
+
+      <!-- 3-COLUMN VIDEO SHOWCASE MOCKUPS -->
+      <div class="showcase-row">
+        <!-- Mockup 1: Les Ouvriers de France -->
+        <div class="phone-mockup">
+          <div class="phone-screen bg-forge">
+            <div class="phone-video-art"></div>
+            <div class="phone-overlay">Ch. 01 / Heritage</div>
+            <div class="phone-watermark">CESAR+</div>
+            <div class="phone-caption">
+              <b>Les Ouvriers de France</b>
+              "Le geste pur de l'acier forgé dans le silence de l'atelier."
+            </div>
+          </div>
+        </div>
+        
+        <!-- Mockup 2: Haute Couture -->
+        <div class="phone-mockup">
+          <div class="phone-screen bg-editorial">
+            <div class="phone-video-art"></div>
+            <div class="phone-overlay">Ch. 02 / Couture</div>
+            <div class="phone-watermark">CESAR+</div>
+            <div class="phone-caption">
+              <b>Haute Couture</b>
+              "The structural rhythm of thread and spatial design."
+            </div>
+          </div>
+        </div>
+
+        <!-- Mockup 3: Animated Artworks -->
+        <div class="phone-mockup">
+          <div class="phone-screen bg-cobalt">
+            <div class="phone-video-art"></div>
+            <div class="phone-overlay">Ch. 03 / Synesthesia</div>
+            <div class="phone-watermark">CESAR+</div>
+            <div class="phone-caption">
+              <b>Aesthetic Audio</b>
+              "Transient-driven audio mapping into kinetic loops."
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap bento reveal" id="bento" data-od-id="bento">
+      <div class="bento-grid">
+        <div class="cell cell--hero">
+          <span class="num">01 / architecture</span>
+          <span class="chip chip--green">Orchestrator</span>
+          <h3>The Industrial Printing Model.</h3>
+          <p>We do not operate as an AI-wrapper. Our system compiles comprehensive visual data variables into distinct, highly curated niches, dynamically matching audio transients, dynamic typesetting envelopes, and safe-zone constraints. A singular execution generates hundreds of persistent, localized channels.</p>
+          <div class="doclines">
+            <b>↳</b> 🛠️ Sourcing   Verified chart and catalog mining<br>
+            <b>↳</b> 🌍 Polyglot   Strict language speech envelope limits<br>
+            <b>↳</b> 🛡️ Sentry     Weekly visual safe-zone audits
+          </div>
+        </div>
+        <div class="cell cell--tall" data-od-id="bento-review">
+          <span class="num">02 / typography</span>
+          <span class="chip chip--blue">Sovereignty</span>
+          <h4 style="margin-top: 14px;">Typography as a visual protagonist</h4>
+          <p>We completely strip smart quote anomalies and render clean ASS/SSA typographic layouts. Subtitles are mapped at high-contrast safe zones with Arial Black styles and precise vertical margins, ensuring native readability and zero UI collision on mobile screens.</p>
+        </div>
+        <div class="cell cell--small" data-od-id="bento-export">
+          <span class="num">03 / overlay</span>
+          <h4>Canal+ Premium Identity</h4>
+          <p>Our compiler overlays a white-boxed "CESAR+" broadcast signature on visual layers, reinforcing brand prestige.</p>
+        </div>
+        <div class="cell cell--small" data-od-id="bento-history">
+          <span class="num">04 / compiler</span>
+          <span class="chip chip--yellow">Hardware</span>
+          <h4 style="margin-top: 8px;">M3 Max Hardware Acceleration</h4>
+          <p>Compiling runs locally on Apple Silicon utilizing Videotoolbox HEVC frameworks, saving thousands in cloud rendering costs.</p>
+        </div>
+        <div class="cell cell--wide" data-od-id="bento-stack">
+          <span class="num">05 / protection</span>
+          <span class="chip chip--red">Security</span>
+          <h4 style="margin-top: 14px;">Complete Code Sovereignty</h4>
+          <p>We do not share proprietary code logic or file structures with third-party aggregators. All core pipeline orchestration, temporal alignments, and local syntheses run inside fully isolated, private sandboxes.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap contrast reveal" id="contrast" data-od-id="contrast">
+      <div class="columns">
+        <h2>Atelier Synesthésie is not an AI-avatar factory. Or a slideshow template. Or generic feed slop.</h2>
+        <div>
+          <div class="pair">
+            <div>
+              <div class="label">Doesn't</div>
+              <p class="strike">Generate creepy, synthetic AI talking-head clones or cheap slideshows.</p>
+            </div>
+            <div>
+              <div class="label">Does</div>
+              <p>Animate real-world premium covers, fashion layouts, and authentic human gestures with beat-synced kinetic pacing.</p>
+            </div>
+            <div>
+              <div class="label">Doesn't</div>
+              <p class="strike">Overload visual displays with chaotic, low-fidelity subtitles and neon emojis.</p>
+            </div>
+            <div>
+              <div class="label">Does</div>
+              <p>Honour classic Swiss typography, clean margins, and highly purified, professional broadcast watermarks.</p>
+            </div>
+            <div>
+              <div class="label">Doesn't</div>
+              <p class="strike">Rely entirely on expensive, centralized API lock-ins that burn through startup runway.</p>
+            </div>
+            <div>
+              <div class="label">Does</div>
+              <p>Optimize with local-first, hardware-accelerated M3 Max pipelines alongside highly-efficient multi-agent LLM routers.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap pricing reveal" id="roadmap" data-od-id="pricing">
+      <div class="pricing-head">
+        <h2>Our Road to Station F and Cloud Scaling.</h2>
+        <p>Developing in Paris. Building an open-source framework that bridges French craftsmanship and high-tech vertical media production.</p>
+      </div>
+      <div class="tiers">
+        <div class="tier">
+          <h3>Phase 1</h3>
+          <p class="sub">Local Prototyping (Current Stage)</p>
+          <div class="price">MVP<small> / Complete</small></div>
+          <ul>
+            <li>Core Python engine running on M3 Max</li>
+            <li>Apple Music motion art scraper</li>
+            <li>Dynamic word-bounding & local TTS</li>
+            <li>GitHub portfolio showcase</li>
+          </ul>
+          <button class="btn btn-ghost" disabled>Active development</button>
+        </div>
+        <div class="tier tier--highlight">
+          <h3>Phase 2</h3>
+          <p class="sub">Station F Admission (Target Q3 2026)</p>
+          <div class="price">Apply<small> / In Progress</small></div>
+          <ul>
+            <li>Submission to Founders Program & HEC</li>
+            <li>Highlighting "Les Ouvriers de France" initiative</li>
+            <li>Vetting by premium creative juries</li>
+            <li>Unlocking HAL Portal benefits</li>
+          </ul>
+          <button class="btn btn-primary" onclick="window.location.href='mailto:alexphoenix@example.com?subject=Atelier Synesthesie Interest';">Contact César</button>
+        </div>
+        <div class="tier">
+          <h3>Phase 3</h3>
+          <p class="sub">Cloud Scale & Enterprise APIs</p>
+          <div class="price">$25k+<small> / Credit Goal</small></div>
+          <ul>
+            <li>Activate Microsoft, AWS & Google perks</li>
+            <li>Deploy massive parallel translation pipelines</li>
+            <li>Cloud Run horizontal visual compiling</li>
+            <li>Direct partnerships with French Maisons</li>
+          </ul>
+          <button class="btn btn-ghost" disabled>Unlocks in Phase 2</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap row">
+      <span>Atelier Synesthésie · Station F, Paris, FR · Build 2.0.0 · 2026</span>
+      <span>
+        <a href="https://github.com" target="_blank">GitHub</a> · <a href="#bento">The Engine</a> · <a href="#contrast">The Aesthetic</a>
+      </span>
+    </div>
+  </footer>
+
+  <script>
+    // Intersection-observer reveal — never window scroll listeners.
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+      }
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+  </script>
+</body>
+</html>
