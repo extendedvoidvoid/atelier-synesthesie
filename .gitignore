@@ -1,0 +1,13 @@
+# Ignore private application details
+PRIVATE_DETAILS.json
+
+# Ignore python cache
+__pycache__/
+*.pyc
+
+# Local node_modules and logs
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
