@@ -47,7 +47,7 @@ CONTENT_MAP = {
     },
     "7": {
         "title": "Creator's Profile (César)",
-        "text": "Experienced senior creative developer and systems engineer focused on high-end cinematic automation, local GPU pipelines, and bridging classical French heritage with state-of-the-art WebGL/LLM engineering."
+        "text": "Our founder’s philosophy is defined by direct execution over corporate self-promotion. We choose not to maintain traditional, buzzword-heavy LinkedIn profiles, choosing instead to let our active codebase, our live high-fidelity website showcase, and our public YouTube vertical feeds speak for themselves. César is an experienced creative systems engineer with decades of background in systems architecture, local GPU engineering, and high-end video compilation pipelines, now focused entirely on building CraftCut’s sovereign media infrastructure."
     }
 }
 
