@@ -145,11 +145,10 @@
     }
     .phone-video-art {
       position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
+      top: 0; left: 0; width: 100%; height: 100%;
       z-index: 1;
       opacity: 0.75;
-      background-size: cover;
-      background-position: center;
+      object-fit: cover;
       mix-blend-mode: hard-light;
     }
     .phone-overlay {
@@ -344,7 +343,9 @@
         <!-- Mockup 1: Les Ouvriers de France -->
         <div class="phone-mockup">
           <div class="phone-screen bg-forge">
-            <div class="phone-video-art"></div>
+            <video autoplay loop muted playsinline class="phone-video-art">
+              <source src="video1.mp4" type="video/mp4" />
+            </video>
             <div class="phone-overlay">Ch. 01 / Heritage</div>
             <div class="phone-watermark">CESAR+</div>
             <div class="phone-caption">
@@ -357,7 +358,9 @@
         <!-- Mockup 2: Haute Couture -->
         <div class="phone-mockup">
           <div class="phone-screen bg-editorial">
-            <div class="phone-video-art"></div>
+            <video autoplay loop muted playsinline class="phone-video-art">
+              <source src="video2.mp4" type="video/mp4" />
+            </video>
             <div class="phone-overlay">Ch. 02 / Couture</div>
             <div class="phone-watermark">CESAR+</div>
             <div class="phone-caption">
@@ -370,7 +373,9 @@
         <!-- Mockup 3: Animated Artworks -->
         <div class="phone-mockup">
           <div class="phone-screen bg-cobalt">
-            <div class="phone-video-art"></div>
+            <video autoplay loop muted playsinline class="phone-video-art">
+              <source src="video3.mp4" type="video/mp4" />
+            </video>
             <div class="phone-overlay">Ch. 03 / Synesthesia</div>
             <div class="phone-watermark">CESAR+</div>
             <div class="phone-caption">
