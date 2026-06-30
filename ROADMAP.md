@@ -1,4 +1,4 @@
-# 🗺️ ATELIER SYNESTHÉSIE: STARTUP EXECUTION ROADMAP
+# 🗺️ CRAFTCUT: STARTUP EXECUTION ROADMAP
 *Master Checklist for Station F Admission & Cloud Credit Acquisition*
 
 ---
@@ -18,7 +18,7 @@ To align perfectly with the Station F jury and top-tier VCs, all our application
 - [ ] **Launch GitHub Pages MVP:**
   - Initialize Git in your project folder.
   - Push `index.html` to a new public GitHub repository.
-  - Enable GitHub Pages to get your live URL (e.g., `https://github.com/alexphoenix/atelier-synesthesie`).
+  - Enable GitHub Pages to get your live URL (e.g., `https://github.com/alexphoenix/atelier-craftcut`).
 - [ ] **Configure the Hermes Agent:**
   - Load the `AGENT_PROMPT.md` directly into your Hermes agent interface.
   - Test it by asking Hermes to draft a 150-character elevator pitch.

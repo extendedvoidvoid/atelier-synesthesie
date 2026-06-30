@@ -1,5 +1,5 @@
 # 🤖 HERMES ROADMAP: SOVEREIGN PIPELINE & CAMPAIGN INTEGRATION
-*Atelier Synesthésie — Autopilot Form-Filling, CLI Orchestration & Scale Blueprint*
+*CraftCut — Autopilot Form-Filling, CLI Orchestration & Scale Blueprint*
 
 This roadmap outlines the exact execution sequence for your **Hermes Agent**. Since Hermes is embedded directly in your **Open Design** environment, it can execute high-level browser actions, call `od` CLI subcommands, and manage your video printing press on autopilot.
 

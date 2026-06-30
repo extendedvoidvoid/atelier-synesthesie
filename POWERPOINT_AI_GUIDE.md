@@ -1,5 +1,5 @@
 # 🎨 COPILOT POWERPOINT AI PREMIUM GENERATION GUIDE
-*Atelier Synesthésie — César+ Brand Deck Guide*
+*CraftCut — César+ Brand Deck Guide*
 
 Since you have access to **Microsoft 365 Copilot (PowerPoint AI Premium)** via your free month, you can generate an elite, professional deck on your M3 Max in seconds. 2026's Copilot parses markdown structures and aligns layout options automatically.
 
@@ -12,12 +12,12 @@ Follow this exact blueprint to construct the most modern, editorial, and cinemat
 Open PowerPoint, click the **Copilot** button on the top ribbon, and paste this exact prompt:
 
 ```text
-Create a 12-slide presentation about "Atelier Synesthésie", a premium French creative-tech startup developed at Station F, Paris. 
+Create a 12-slide presentation about "CraftCut", a premium French creative-tech startup developed at Station F, Paris. 
 
 Use an editorial minimalist style. Focus on extreme high-contrast, generous margins, and an off-white background (#FBFBFA) paired with off-black typography (#1A1A19). Utilize 'Instrument Serif' and 'Switzer' fonts.
 
 Ensure the presentation includes:
-1. Title: Atelier Synesthésie (César+ Start-up)
+1. Title: CraftCut (César+ Start-up)
 2. Executive Summary: Transforming music art, fashion layouts, and the noble legacy of 'Les Ouvriers de France' into vertical video essays.
 3. The Problem: The rise of generic 'AI slop' that dilutes brand prestige.
 4. The Solution: Our proprietary "CraftCut" pipeline for editorial video creation at the forefront of content creation.

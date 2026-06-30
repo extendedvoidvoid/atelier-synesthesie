@@ -1,5 +1,5 @@
 # 🏰 STATION F ADMISSION & APPLICATION BLUEPRINT
-*Atelier Synesthésie — Founders Program & HEC Incubator Admission Guide*
+*CraftCut — Founders Program & HEC Incubator Admission Guide*
 
 ---
 
@@ -19,7 +19,7 @@ To enter Station F as an **auto-entrepreneur** building a creative-tech platform
 When answering the Station F application questions, frame your project using these three pillars:
 
 *   **Pillar 1: Creative-Tech & Aesthetic Prestige**
-    Explain that *Atelier Synesthésie* is fighting "AI slop." By automating vertical videos with strict typographical layouts, dynamic pacing, and curated motion-art, we maintain the high aesthetic standards of French fashion and design.
+    Explain that *CraftCut* is fighting "AI slop." By automating vertical videos with strict typographical layouts, dynamic pacing, and curated motion-art, we maintain the high aesthetic standards of French fashion and design.
 *   **Pillar 2: Supporting "Les Ouvriers de France" & French Heritage**
     Emphasize that the platform has a deep social and cultural mission: putting the spotlight on the human hands behind French craftsmanship. By translating vertical essays into 7 languages simultaneously, we export French excellence and regional artisan work to global audiences on TikTok, YouTube, and Instagram.
 *   **Pillar 3: The Auto-Entrepreneur Agility**

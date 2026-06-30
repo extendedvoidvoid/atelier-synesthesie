@@ -83,7 +83,7 @@ def main():
         print("❌ Question cannot be empty.")
         sys.exit(1)
         
-    print("\n🧠 Crafting high-fidelity response using Atelier Synesthésie context...")
+    print("\n🧠 Crafting high-fidelity response using CraftCut context...")
     
     # Check if using OpenRouter or Direct Gemini
     if config.get("openrouter_api_key"):

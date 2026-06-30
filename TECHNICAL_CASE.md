@@ -1,10 +1,10 @@
 # 🛠️ TECHNICAL CASE: SOVEREIGN PIPELINE & MASS CHANNEL MATH
-*Atelier Synesthésie — Technical Specification & Sovereign Cloud API Request*
+*CraftCut — Technical Specification & Sovereign Cloud API Request*
 
 ---
 
 ## 1. The Sovereign "Video Printing Press" Concept
-Atelier Synesthésie is designed as a secure, local-first **industrial printing press for 9:16 media channels**. 
+CraftCut is designed as a secure, local-first **industrial printing press for 9:16 media channels**. 
 
 Our technology addresses a major 2026 industry vulnerability: generic "AI wrappers" depend on public, third-party centralized clouds, which leak data, introduce massive latency, and produce highly repetitive, low-fidelity content ("AI slop").
 
