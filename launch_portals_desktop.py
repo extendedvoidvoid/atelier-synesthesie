@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-César+ Immediate Portal Launcher
+César+ Resilient Portal Launcher
 Launches Chromium on your desktop and opens all 4 credit application forms.
 """
 
@@ -30,20 +30,28 @@ def main():
         browser = p.chromium.launch(headless=False, args=["--start-maximized"])
         context = browser.new_context(viewport={"width": 1280, "height": 800})
         
-        # Open first tab
+        # Open first tab (resilient parameters)
         page = context.new_page()
-        print(f"🔗 Opening: {urls[0]}")
-        page.goto(urls[0])
+        print(f"🔗 Opening: {urls[0]}...")
+        try:
+            page.goto(urls[0], wait_until="domcontentloaded", timeout=60000)
+            print("  ✓ BytePlus loaded!")
+        except Exception as e:
+            print(f"  ⚠️ Warning loading BytePlus: {e}. Proceeding to other tabs...")
         
-        # Open other tabs
+        # Open other tabs (resilient parameters)
         for url in urls[1:]:
-            print(f"🔗 Opening tab: {url}")
-            tab = context.new_page()
-            tab.goto(url)
+            print(f"🔗 Opening tab: {url}...")
+            try:
+                tab = context.new_page()
+                tab.goto(url, wait_until="domcontentloaded", timeout=60000)
+                print(f"  ✓ Loaded!")
+            except Exception as e:
+                print(f"  ⚠️ Warning loading tab {url}: {e}. Proceeding...")
             
-        print("\n🏆 ALL PORTALS LAUNCHED SUCCESSFULLY ON YOUR SCREEN!")
-        print("Keep this terminal process running to keep the browser window open.")
-        print("Once you are ready to close the browser, press Ctrl+C here.")
+        print("\n🏆 PORTALS COMPLETED ON YOUR SCREEN!")
+        print("Keep this process running to keep the browser window active.")
+        print("Once you are finished, press Ctrl+C here in the terminal.")
         
         # Keep process alive
         try:
